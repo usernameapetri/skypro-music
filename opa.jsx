@@ -1,15 +1,11 @@
-import imgPlaylist01 from '../../../assets/playlist01.png';
-import imgPlaylist02 from '../../../assets/playlist02.png';
-import imgPlaylist03 from '../../../assets/playlist03.png';
-import { Icon } from '../icon';
-export default function Sidebar() {
+export default function bober() {
   return (
     <div className="main__sidebar sidebar">
       <div className="sidebar__personal">
         <p className="sidebar__personal-name">Sergey.Ivanov</p>
         <div className="sidebar__icon">
           <svg alt="logout">
-            <Icon name="logout" />
+            <use xlinkHref="img/icon/sprite.svg#logout"></use>
           </svg>
         </div>
       </div>
@@ -19,7 +15,7 @@ export default function Sidebar() {
             <a className="sidebar__link" href="#">
               <img
                 className="sidebar__img"
-                src={imgPlaylist01}
+                src="img/playlist01.png"
                 alt="day's playlist"
               />
             </a>
@@ -28,7 +24,7 @@ export default function Sidebar() {
             <a className="sidebar__link" href="#">
               <img
                 className="sidebar__img"
-                src={imgPlaylist02}
+                src="img/playlist02.png"
                 alt="day's playlist"
               />
             </a>
@@ -37,7 +33,7 @@ export default function Sidebar() {
             <a className="sidebar__link" href="#">
               <img
                 className="sidebar__img"
-                src={imgPlaylist03}
+                src="img/playlist03.png"
                 alt="day's playlist"
               />
             </a>
