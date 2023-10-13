@@ -3,7 +3,7 @@ import './ModalPopup.css';
 export const PopupElements = (props) => {
   if (props.name === 'year') {
     return (
-      <div className={props.classYear}>
+      <div className="popup__wrapper">
         <ul className="popup">
           <li className="popup__element">По умолчанию</li>
           <li className="popup__element">Сначала новые</li>
@@ -13,7 +13,7 @@ export const PopupElements = (props) => {
     );
   } else if (props.name === 'performer') {
     return (
-      <div className={props.classPerformer}>
+      <div className="popup__wrapper performer">
         <ul className="popup">
           <li className="popup__element">Michael Jackson</li>
           <li className="popup__element">Frank Sinatra</li>
@@ -25,7 +25,7 @@ export const PopupElements = (props) => {
     );
   } else if (props.name === 'genre') {
     return (
-      <div className={props.classGenre}>
+      <div className="popup__wrapper genre">
         <ul className="popup">
           <li className="popup__element">Рок</li>
           <li className="popup__element">Хип-хоп</li>

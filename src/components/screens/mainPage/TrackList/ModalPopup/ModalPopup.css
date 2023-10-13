@@ -21,7 +21,7 @@
   z-index: 2;
   position: absolute;
   top: 125%;
-  left: 36%;
+  left: 22%;
 }
 
 .performer {
@@ -29,7 +29,7 @@
 }
 
 .genre {
-  left: 22%;
+  left: 36%;
 }
 
 .popup {
@@ -54,4 +54,10 @@
 .popup__element:hover {
   color: #b672ff;
   text-decoration-line: underline;
+}
+
+.active {
+  border-color: #ad61ff;
+  color: #ad61ff;
+  cursor: pointer;
 }

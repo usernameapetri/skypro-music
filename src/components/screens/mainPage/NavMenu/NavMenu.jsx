@@ -3,14 +3,13 @@ import logoImg from '../../../../assets/logo.png';
 import './NavMenu.css';
 
 export default function Nav() {
-  const [menu_class, setMenuClass] = useState('nav__menu menu hidden');
-  const [isMenuClicked, setIsMenuClicked] = useState(false);
+  const [isMenuClicked, setIsMenuClicked] = useState(null);
 
   const updateMenu = () => {
     if (!isMenuClicked) {
-      setMenuClass('nav__menu menu');
+      setIsMenuClicked(true);
     } else {
-      setMenuClass('nav__menu menu hidden');
+      setIsMenuClicked(null);
     }
     setIsMenuClicked(!isMenuClicked);
   };
@@ -24,25 +23,27 @@ export default function Nav() {
         <span className="burger__line"></span>
         <span className="burger__line"></span>
       </div>
-      <div className={menu_class}>
-        <ul className="menu__list">
-          <li className="menu__item">
-            <a href="#" className="menu__link">
-              Главное
-            </a>
-          </li>
-          <li className="menu__item">
-            <a href="#" className="menu__link">
-              Мой плейлист
-            </a>
-          </li>
-          <li className="menu__item">
-            <a href="../signin.html" className="menu__link">
-              Войти
-            </a>
-          </li>
-        </ul>
-      </div>
+      {isMenuClicked && (
+        <div className="nav_menu menu">
+          <ul className="menu__list">
+            <li className="menu__item">
+              <a href="#" className="menu__link">
+                Главное
+              </a>
+            </li>
+            <li className="menu__item">
+              <a href="#" className="menu__link">
+                Мой плейлист
+              </a>
+            </li>
+            <li className="menu__item">
+              <a href="../signin.html" className="menu__link">
+                Войти
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 }
