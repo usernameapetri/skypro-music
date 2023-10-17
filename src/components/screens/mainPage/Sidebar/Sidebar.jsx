@@ -5,7 +5,7 @@ import imgPlaylist03 from '../../../../assets/playlist03.png';
 import { Icon } from '../../Icons/Icon';
 import { useEffect } from 'react';
 import SkeletonSidebar from '../../Skeleton/SkeletonSidebar';
-
+import * as S from './Sidebar.Styles';
 export default function Sidebar() {
   const [sidebar, setSidebar] = useState(false);
 
@@ -16,48 +16,36 @@ export default function Sidebar() {
   });
 
   return (
-    <div className="main__sidebar sidebar">
-      <div className="sidebar__personal">
-        <p className="sidebar__personal-name">Sergey.Ivanov</p>
-        <div className="sidebar__icon">
+    <S.MainSidebar className="sidebar">
+      <S.SidebarPersonal>
+        <S.SidebarPersonalName>Sergey.Ivanov</S.SidebarPersonalName>
+        <S.SidebarIcon>
           <Icon name="logout" alt="logout" />
-        </div>
-      </div>
+        </S.SidebarIcon>
+      </S.SidebarPersonal>
       {sidebar && (
-        <div className="sidebar__block">
-          <div className="sidebar__list">
-            <div className="sidebar__item">
-              <a className="sidebar__link" href="#">
-                <img
-                  className="sidebar__img"
-                  src={imgPlaylist01}
-                  alt="day's playlist"
-                />
-              </a>
-            </div>
-            <div className="sidebar__item">
-              <a className="sidebar__link" href="#">
-                <img
-                  className="sidebar__img"
-                  src={imgPlaylist02}
-                  alt="day's playlist"
-                />
-              </a>
-            </div>
-            <div className="sidebar__item">
-              <a className="sidebar__link" href="#">
-                <img
-                  className="sidebar__img"
-                  src={imgPlaylist03}
-                  alt="day's playlist"
-                />
-              </a>
-            </div>
-          </div>
-        </div>
+        <S.SidebarBlock>
+          <S.SidebarList>
+            <S.SidebarItem>
+              <S.SidebarLink href="#">
+                <S.SidebarImg src={imgPlaylist01} alt="day's playlist" />
+              </S.SidebarLink>
+            </S.SidebarItem>
+            <S.SidebarItem>
+              <S.SidebarLink href="#">
+                <S.SidebarImg src={imgPlaylist02} alt="day's playlist" />
+              </S.SidebarLink>
+            </S.SidebarItem>
+            <S.SidebarItem>
+              <S.SidebarLink href="#">
+                <S.SidebarImg src={imgPlaylist03} alt="day's playlist" />
+              </S.SidebarLink>
+            </S.SidebarItem>
+          </S.SidebarList>
+        </S.SidebarBlock>
       )}
 
       {!sidebar && <SkeletonSidebar />}
-    </div>
+    </S.MainSidebar>
   );
 }

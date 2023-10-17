@@ -1,13 +1,14 @@
+import * as S from './Skeleton.Styles';
 function SkeletonTrack() {
   return (
-    <div className="skeleton__playlist">
-      <div className="skeleton__img-track"></div>
-      <div className="skeleton__section-track">
-        <div className="skeleton__track-tittle"></div>
-        <div className="skeleton__track-author"></div>
-        <div className="skeleton__track-album"></div>
-      </div>
-    </div>
+    <S.SkeletonPlaylist>
+      <S.SkeletonImgTrack />
+      <S.SkeletonSelectorTrack>
+        <S.SkeletonTrackTitle />
+        <S.SkeletonTrackAuthor />
+        <S.SkeletonTrackAlbum />
+      </S.SkeletonSelectorTrack>
+    </S.SkeletonPlaylist>
   );
 }
 

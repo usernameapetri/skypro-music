@@ -1,22 +1,21 @@
-import '../../../App.css';
 import NavMenu from './NavMenu/NavMenu.jsx';
 import TrackList from './TrackList/Tracklist.jsx';
 import Sidebar from './Sidebar/Sidebar.jsx';
 import AudioPlayer from './AudioPlayer/AudioPlayer.jsx';
-
+import * as S from './MainPage.Styles.jsx';
 function MainPage() {
   return (
-    <div className="wrapper">
-      <div className="container">
-        <main className="main">
+    <S.Wrapper>
+      <S.Container>
+        <S.Main>
           <NavMenu></NavMenu>
           <TrackList></TrackList>
           <Sidebar></Sidebar>
-        </main>
+        </S.Main>
         <AudioPlayer></AudioPlayer>
-        <footer className="footer"></footer>
-      </div>
-    </div>
+        <S.Footer />
+      </S.Container>
+    </S.Wrapper>
   );
 }
 

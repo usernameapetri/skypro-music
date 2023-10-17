@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Icon } from '../../Icons/Icon';
 import SkeletonTrack from '../../Skeleton/SkeletonTrack';
+import * as S from './Track.Styles';
 export default function Track() {
   const [tracks, setTrack] = useState(false);
 
@@ -10,37 +11,37 @@ export default function Track() {
     }, 3000);
   });
   return (
-    <div className="playlist__item">
+    <S.PlaylistItem>
       {tracks && (
-        <div className="playlist__track track">
-          <div className="track__title">
-            <div className="track__title-image">
+        <S.PlayListTrack className="track">
+          <S.TrackTitle>
+            <S.TrackTitleImage>
               <Icon className="track__title-svg" alt="music" name="note" />
-            </div>
-            <div className="track__title-text">
-              <a className="track__title-link" href="http://">
-                Guilt <span className="track__title-span"></span>
-              </a>
-            </div>
-          </div>
-          <div className="track__author">
-            <a className="track__author-link" href="http://">
-              Nero
-            </a>
-          </div>
-          <div className="track__album">
-            <a className="track__album-link" href="http://">
-              Welcome Reality
-            </a>
-          </div>
-          <div className="track__time">
-            <Icon className="track__time-svg" alt="time" name="like" />
-            <span className="track__time-text">4:44</span>
-          </div>
-        </div>
+            </S.TrackTitleImage>
+            <S.TrackTitleText>
+              <S.TrackTitleLink href="http://">
+                Guilt <S.TrackTitleSpan></S.TrackTitleSpan>
+              </S.TrackTitleLink>
+            </S.TrackTitleText>
+          </S.TrackTitle>
+          <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">Nero</S.TrackAuthorLink>
+          </S.TrackAuthor>
+          <S.TrackAlbum>
+            <S.TrackAlbumLink href="http://">Welcome Reality</S.TrackAlbumLink>
+          </S.TrackAlbum>
+          <S.TrackTime>
+            <S.TrackTimeSvg
+              className="track__time-svg"
+              alt="time"
+              name="like"
+            />
+            <S.TrackTimeText>4:44</S.TrackTimeText>
+          </S.TrackTime>
+        </S.PlayListTrack>
       )}
 
       {!tracks && [1, 2, 3, 4, 5].map((n) => <SkeletonTrack key={n} />)}
-    </div>
+    </S.PlaylistItem>
   );
 }

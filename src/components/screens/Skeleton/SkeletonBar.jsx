@@ -1,11 +1,12 @@
-import './Skeleton.css';
+
+import * as S from './Skeleton.Styles';
 function SkeletonBar() {
   return (
-    <div className="skeleton__wrapper">
-      <div className="skeleton__img"></div>
-      <div className="skeleton__author"></div>
-      <div className="skeleton__album"></div>
-    </div>
+    <S.SkeletonWrapper>
+      <S.SkeletonImg />
+      <S.SkeletonAuthor />
+      <S.SkeletonAlbum />
+    </S.SkeletonWrapper>
   );
 }
 
