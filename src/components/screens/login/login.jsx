@@ -1,37 +1,30 @@
 import logoModalIcon from '../../../assets/logo_modal.png';
-import styles from './login.module.css';
+
+import * as S from './LoginStyles';
 
 function Login() {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.containerEnter}>
-        <div className={styles.modal__block}>
-          <form className={styles.modal__formLogin} action="#">
-            <a href="../">
-              <div className={styles.modal__logo}>
+    <S.Wrapper>
+      <S.ContainerEnter>
+        <S.ModalBlock>
+          <S.ModalFormLogin action="#">
+            <S.ModalFormLink href="../">
+              <S.ModalLogo>
                 <img src={logoModalIcon} alt="logo" />
-              </div>
-            </a>
-            <input
-              className={styles.modal__input}
-              type="text"
-              name="login"
-              placeholder="Почта"
-            />
-            <input
-              className={styles.modal__input}
+              </S.ModalLogo>
+            </S.ModalFormLink>
+            <S.ModalInput type="text" name="login" placeholder="Почта" />
+            <S.ModalInput
               type="password"
               name="password"
               placeholder="Пароль"
             />
-            <button className={styles.modal__btnEnter}>Войти</button>
-            <button className={styles.modal__btnSignup}>
-              Зарегистрироваться
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+            <S.ModalBtnEnter>Войти</S.ModalBtnEnter>
+            <S.ModalBtnSingup>Зарегистрироваться</S.ModalBtnSingup>
+          </S.ModalFormLogin>
+        </S.ModalBlock>
+      </S.ContainerEnter>
+    </S.Wrapper>
   );
 }
 
