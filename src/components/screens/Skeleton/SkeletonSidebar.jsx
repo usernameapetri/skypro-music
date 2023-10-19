@@ -1,10 +1,11 @@
+import * as S from './Skeleton.Styles';
 function SkeletonSidebar() {
   return (
-    <div className="skeleton__sidebar">
-      <div className="skeleton__sidebarBlock"></div>
-      <div className="skeleton__sidebarBlock"></div>
-      <div className="skeleton__sidebarBlock"></div>
-    </div>
+    <S.SkeletonSidebar>
+      <S.SkeletonSidebarBlock />
+      <S.SkeletonSidebarBlock />
+      <S.SkeletonSidebarBlock />
+    </S.SkeletonSidebar>
   );
 }
 
