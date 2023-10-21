@@ -1,4 +1,4 @@
-import logoModalIcon from '../../../assets/logo_modal.png';
+import logoModalIcon from '../../assets/logo_modal.png';
 
 import * as S from './LoginStyles';
 

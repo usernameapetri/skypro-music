@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Icon } from '../../Icons/Icon';
-import SkeletonBar from '../../Skeleton/SkeletonBar';
-import * as S from './AudioPlayerStyle';
+import SkeletonBar from '../Skeleton/SkeletonBar';
+import * as S from './AudioPlayer.Styles';
 export default function AudioPlayer() {
   const [bar, setBar] = useState(false);
 

@@ -1,17 +1,17 @@
-import { ReactComponent as IconDislike } from '../../../assets/icon/dislike.svg';
-import { ReactComponent as IconLike } from '../../../assets/icon/like.svg';
-import { ReactComponent as IconNext } from '../../../assets/icon/next.svg';
-import { ReactComponent as IconNote } from '../../../assets/icon/note.svg';
-import { ReactComponent as IconPlay } from '../../../assets/icon/play.svg';
-import { ReactComponent as IconPrev } from '../../../assets/icon/prev.svg';
-import { ReactComponent as IconRepeat } from '../../../assets/icon/repeat.svg';
-import { ReactComponent as IconSearch } from '../../../assets/icon/search.svg';
-import { ReactComponent as IconShuffle } from '../../../assets/icon/shuffle.svg';
-import { ReactComponent as IconSprite } from '../../../assets/icon/sprite.svg';
-import { ReactComponent as IconVolume } from '../../../assets/icon/volume.svg';
-import { ReactComponent as IconLogout } from '../../../assets/icon/logout.svg';
-import { ReactComponent as VolumeBar } from '../../../assets/icon/volumeBar.svg';
-import { ReactComponent as IconWatch } from '../../../assets/icon/watch.svg';
+import { ReactComponent as IconDislike } from '../assets/icon/dislike.svg';
+import { ReactComponent as IconLike } from '../assets/icon/like.svg';
+import { ReactComponent as IconNext } from '../assets/icon/next.svg';
+import { ReactComponent as IconNote } from '../assets/icon/note.svg';
+import { ReactComponent as IconPlay } from '../assets/icon/play.svg';
+import { ReactComponent as IconPrev } from '../assets/icon/prev.svg';
+import { ReactComponent as IconRepeat } from '../assets/icon/repeat.svg';
+import { ReactComponent as IconSearch } from '../assets/icon/search.svg';
+import { ReactComponent as IconShuffle } from '../assets/icon/shuffle.svg';
+import { ReactComponent as IconSprite } from '../assets/icon/sprite.svg';
+import { ReactComponent as IconVolume } from '../assets/icon/volume.svg';
+import { ReactComponent as IconLogout } from '../assets/icon/logout.svg';
+import { ReactComponent as VolumeBar } from '../assets/icon/volumeBar.svg';
+import { ReactComponent as IconWatch } from '../assets/icon/watch.svg';
 
 export const Icon = ({ name }) => {
   if (name === 'dislike') return <IconDislike />;

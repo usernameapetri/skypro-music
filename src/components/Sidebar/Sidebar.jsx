@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import imgPlaylist01 from '../../../../assets/playlist01.png';
-import imgPlaylist02 from '../../../../assets/playlist02.png';
-import imgPlaylist03 from '../../../../assets/playlist03.png';
+import imgPlaylist01 from '../../assets/playlist01.png';
+import imgPlaylist02 from '../../assets/playlist02.png';
+import imgPlaylist03 from '../../assets/playlist03.png';
 import { Icon } from '../../Icons/Icon';
 import { useEffect } from 'react';
-import SkeletonSidebar from '../../Skeleton/SkeletonSidebar';
+import SkeletonSidebar from '../Skeleton/SkeletonSidebar';
 import * as S from './Sidebar.Styles';
 export default function Sidebar() {
   const [sidebar, setSidebar] = useState(false);

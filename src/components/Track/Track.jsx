@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Icon } from '../../Icons/Icon';
-import SkeletonTrack from '../../Skeleton/SkeletonTrack';
+import SkeletonTrack from '../Skeleton/SkeletonTrack';
 import * as S from './Track.Styles';
 export default function Track() {
   const [tracks, setTrack] = useState(false);

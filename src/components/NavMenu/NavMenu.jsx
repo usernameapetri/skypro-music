@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import logoImg from '../../../../assets/logo.png';
+import logoImg from '../../assets/logo.png';
 import * as S from './NavMenu.Styles';
 export default function Nav() {
   const [isMenuClicked, setIsMenuClicked] = useState(null);
