@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Icon } from '../../Icons/Icon';
+import SearchBar from './SearchBar';
 import Track from '../Track/Track';
 import { PopupElements } from './ModalPopup/PerformerPopup';
 import * as S from './TrackList.Styles';
-
+import CenterBlock from './CenterBlock';
 export default function TrackList() {
   const [selectedPopUp, setSelectedPopUp] = useState(null);
 
@@ -16,11 +16,8 @@ export default function TrackList() {
   };
 
   return (
-    <S.MainCenterBlock className="centerblock">
-      <S.CenterBlockSearch className="search">
-        <Icon className="search__svg" name="search" />
-        <S.SearchText type="search" placeholder="Поиск" name="search" />
-      </S.CenterBlockSearch>
+    <CenterBlock>
+      <SearchBar />
       <S.CenterBlockH2>Треки</S.CenterBlockH2>
       <S.CenterBlockFilter>
         <S.FilterTitle>Искать по:</S.FilterTitle>
@@ -64,6 +61,6 @@ export default function TrackList() {
       <S.ContentPlaylist>
         <Track />
       </S.ContentPlaylist>
-    </S.MainCenterBlock>
+    </CenterBlock>
   );
 }

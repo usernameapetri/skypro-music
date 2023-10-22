@@ -30,14 +30,14 @@ ul li {
   list-style: none;
 }
 
-@font-face {
+/* @font-face {
   font-family: 'StratosSkyeng';
   src: local('StratosSkyeng'), local('StratosSkyeng'),
     url('./assets//fonts/StratosSkyeng.woff2.') format('woff2'),
     url('./assets/fonts/StratosSkyeng.woff');
   font-weight: 400;
   font-style: normal;
-}
+} */
 
 html,
 body {

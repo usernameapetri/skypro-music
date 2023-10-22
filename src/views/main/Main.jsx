@@ -1,7 +1,7 @@
-import NavMenu from '../../components/NavMenu/NavMenu';
 import TrackList from '../../components/TrackList/Tracklist';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import AudioPlayer from '../../components/AudioPlayer//AudioPlayer';
+import AudioPlayer from '../../components/AudioPlayer/AudioPlayer';
+import NavMenu from '../../components/NavMenu/NavMenu';
 import * as S from './Main.Styles';
 function MainPage() {
   return (
