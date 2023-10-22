@@ -22,10 +22,10 @@ export default function Nav() {
         <S.NavMenu className="menu">
           <S.MenuList>
             <S.MenuItem>
-              <S.MenuLink to="/main">Главное</S.MenuLink>
+              <S.MenuLink to="/">Главное</S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink to="/my_tracklist">Мой плейлист</S.MenuLink>
+              <S.MenuLink to="/favorites">Мой плейлист</S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
               <S.MenuLink to="/login">Войти</S.MenuLink>

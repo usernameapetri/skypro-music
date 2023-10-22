@@ -1,10 +1,21 @@
 import PageFrame from '../../layout/PageFrame';
 import * as S from '../../components/TrackList/TrackList.Styles';
 import Track from '../../components/Track/Track';
-export default function IndieCharge() {
+import { useParams } from 'react-router-dom';
+export default function PlayOfTheDay() {
+  const { id } = useParams();
+  console.log(id);
   return (
     <PageFrame>
-      <S.CenterBlockH2>Инди заряд</S.CenterBlockH2>
+      <S.CenterBlockH2>
+        {id === '1'
+          ? 'Классическая музыка'
+          : id === '2'
+          ? 'Электроннаямузыка'
+          : id === '3'
+          ? 'Рок музыка'
+          : ''}
+      </S.CenterBlockH2>
 
       <S.CenterBlockContent>
         <S.ContentTitle className="playlist-title">
