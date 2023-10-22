@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button } from '../../../../App.Styles';
+import { Button } from '../../App.Styles';
 import { Icon } from '../../Icons/Icon';
 export const MainCenterBlock = styled.div`
   width: auto;

@@ -1,8 +1,8 @@
-import NavMenu from './NavMenu/NavMenu.jsx';
-import TrackList from './TrackList/Tracklist.jsx';
-import Sidebar from './Sidebar/Sidebar.jsx';
-import AudioPlayer from './AudioPlayer/AudioPlayer.jsx';
-import * as S from './MainPage.Styles.jsx';
+import TrackList from '../../components/TrackList/Tracklist';
+import Sidebar from '../../components/Sidebar/Sidebar';
+import AudioPlayer from '../../components/AudioPlayer/AudioPlayer';
+import NavMenu from '../../components/NavMenu/NavMenu';
+import * as S from './Main.Styles';
 function MainPage() {
   return (
     <S.Wrapper>

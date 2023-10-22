@@ -1,5 +1,5 @@
-import logoModalIcon from '../../../assets/logo_modal.png';
-import * as S from './RegStyles';
+import logoModalIcon from '../../assets/logo_modal.png';
+import * as S from './Reg.Styles';
 
 function Reg() {
   return (
