@@ -21,17 +21,17 @@ export default function Sidebar() {
       {sidebar && (
         <SidebarContent>
           <S.SidebarItem>
-            <S.SidebarLink href="#">
+            <S.SidebarLink to="/play_of_the_day">
               <S.SidebarImg src={imgPlaylist01} alt="day's playlist" />
             </S.SidebarLink>
           </S.SidebarItem>
           <S.SidebarItem>
-            <S.SidebarLink href="#">
+            <S.SidebarLink to="/dace_hits">
               <S.SidebarImg src={imgPlaylist02} alt="day's playlist" />
             </S.SidebarLink>
           </S.SidebarItem>
           <S.SidebarItem>
-            <S.SidebarLink href="#">
+            <S.SidebarLink to="/indie_charge">
               <S.SidebarImg src={imgPlaylist03} alt="day's playlist" />
             </S.SidebarLink>
           </S.SidebarItem>

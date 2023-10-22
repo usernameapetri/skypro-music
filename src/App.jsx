@@ -1,7 +1,7 @@
-import MainPage from './views/main/Main';
+import AppRoutes from './Routes';
 
 function App() {
-  return <MainPage />;
+  return <AppRoutes />;
 }
 
 export default App;

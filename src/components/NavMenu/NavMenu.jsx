@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import logoImg from '../../assets/logo.png';
 import * as S from './NavMenu.Styles';
+
 export default function Nav() {
   const [isMenuClicked, setIsMenuClicked] = useState(null);
 
@@ -21,13 +22,13 @@ export default function Nav() {
         <S.NavMenu className="menu">
           <S.MenuList>
             <S.MenuItem>
-              <S.MenuLink href="#">Главное</S.MenuLink>
+              <S.MenuLink to="/main">Главное</S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink href="#">Мой плейлист</S.MenuLink>
+              <S.MenuLink to="/my_tracklist">Мой плейлист</S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink href="../signin.html">Войти</S.MenuLink>
+              <S.MenuLink to="/login">Войти</S.MenuLink>
             </S.MenuItem>
           </S.MenuList>
         </S.NavMenu>
