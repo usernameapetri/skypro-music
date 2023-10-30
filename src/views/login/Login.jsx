@@ -7,8 +7,8 @@ function Login() {
     <S.Wrapper>
       <S.ContainerEnter>
         <S.ModalBlock>
-          <S.ModalFormLogin action="#">
-            <S.ModalFormLink href="../">
+          <S.ModalFormLogin action="">
+            <S.ModalFormLink>
               <S.ModalLogo>
                 <img src={logoModalIcon} alt="logo" />
               </S.ModalLogo>

@@ -4,9 +4,9 @@ import Track from '../Track/Track';
 import { PopupElements } from './ModalPopup/PerformerPopup';
 import * as S from './TrackList.Styles';
 import CenterBlock from './CenterBlock';
-export default function TrackList() {
+export default function TrackList(props) {
   const [selectedPopUp, setSelectedPopUp] = useState(null);
-
+  console.log(props.trackData);
   const getPopUp = (popupType) => {
     if (selectedPopUp === popupType) {
       setSelectedPopUp(null);
@@ -59,7 +59,17 @@ export default function TrackList() {
         </S.ContentTitle>
       </S.CenterBlockContent>
       <S.ContentPlaylist>
-        <Track />
+        {props.trackData.map((el) => (
+          <Track
+            key={el.id}
+            name={el.name}
+            id={el.id}
+            author={el.author}
+            album={el.album}
+            duration={el.duration_in_seconds}
+            url={el.track_file}
+          />
+        ))}
       </S.ContentPlaylist>
     </CenterBlock>
   );

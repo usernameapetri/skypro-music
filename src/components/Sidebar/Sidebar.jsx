@@ -7,6 +7,7 @@ import SkeletonSidebar from '../Skeleton/SkeletonSidebar';
 import * as S from './Sidebar.Styles';
 import SidebarBlock from './SidebarBlock';
 import SidebarContent from './SideabrContent';
+
 export default function Sidebar() {
   const [sidebar, setSidebar] = useState(false);
 
@@ -21,17 +22,17 @@ export default function Sidebar() {
       {sidebar && (
         <SidebarContent>
           <S.SidebarItem>
-            <S.SidebarLink href="#">
+            <S.SidebarLink to="/category/1">
               <S.SidebarImg src={imgPlaylist01} alt="day's playlist" />
             </S.SidebarLink>
           </S.SidebarItem>
           <S.SidebarItem>
-            <S.SidebarLink href="#">
+            <S.SidebarLink to="/category/2">
               <S.SidebarImg src={imgPlaylist02} alt="day's playlist" />
             </S.SidebarLink>
           </S.SidebarItem>
           <S.SidebarItem>
-            <S.SidebarLink href="#">
+            <S.SidebarLink to="/category/3">
               <S.SidebarImg src={imgPlaylist03} alt="day's playlist" />
             </S.SidebarLink>
           </S.SidebarItem>
