@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Icon } from '../../Icons/Icon';
 
 export const PlaylistItem = styled.div`
+  cursor: pointer;
   width: 100%;
   display: block;
   margin-bottom: 12px;

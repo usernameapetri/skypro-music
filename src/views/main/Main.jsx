@@ -2,32 +2,22 @@ import TrackList from '../../components/TrackList/Tracklist';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import NavMenu from '../../components/NavMenu/NavMenu';
 import * as S from './Main.Styles';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-function MainPage() {
-  const [data, setData] = useState([]);
-  const getTrackData = () => {
-    axios
-      .get('https://skypro-music-api.skyeng.tech/catalog/track/all/')
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  useEffect(() => {
-    getTrackData();
-  }, []);
+
+function MainPage(props) {
   return (
     <S.Wrapper>
       <S.Container>
         <S.Main>
           <NavMenu />
-          <TrackList trackData={data} />
-          <Sidebar />
+          <TrackList
+            selectedTrack={props.selectedTrack}
+            setSelectedTracks={props.setSelectedTracks}
+            fetchError={props.fetchError}
+            trackData={props.trackData}
+            loadingPage={props.loadingPage}
+          />
+          <Sidebar loadingPage={props.loadingPage} />
         </S.Main>
-
         <S.Footer />
       </S.Container>
     </S.Wrapper>

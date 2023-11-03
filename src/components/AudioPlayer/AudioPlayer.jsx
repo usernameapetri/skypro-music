@@ -1,16 +1,7 @@
-import { useEffect, useState } from 'react';
 import { Icon } from '../../Icons/Icon';
 import SkeletonBar from '../Skeleton/SkeletonBar';
 import * as S from './AudioPlayer.Styles';
-export default function AudioPlayer() {
-  const [bar, setBar] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setBar(true);
-    }, 3000);
-  });
-
+export default function AudioPlayer(props) {
   return (
     <S.Bar>
       <S.BarContent>
@@ -36,25 +27,25 @@ export default function AudioPlayer() {
             </S.PlayerControls>
 
             <S.PlayerTrackPlay>
-              {bar && (
+              {props.loadingPage ? (
+                <SkeletonBar />
+              ) : (
                 <S.TrackPlayContain>
                   <S.TrackPlayImage>
                     <Icon name="note" className="track-play__svg" alt="music" />
                   </S.TrackPlayImage>
                   <S.TrackPlayAuthor>
-                    <S.TrackPlayAuthorLink href="http://">
-                      Ты та...
+                    <S.TrackPlayAuthorLink>
+                      {props.selectedTrack.author}
                     </S.TrackPlayAuthorLink>
                   </S.TrackPlayAuthor>
                   <S.TrackPlayAlbum>
-                    <S.TrackPlayAlbumLink href="http://">
-                      Баста
+                    <S.TrackPlayAlbumLink>
+                      {props.selectedTrack.album}
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.TrackPlayContain>
               )}
-
-              {!bar && <SkeletonBar />}
 
               <S.TrackPlayLikeDis>
                 <S.TrackPlayLike className="_btn-icon">

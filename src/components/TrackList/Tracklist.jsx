@@ -4,15 +4,20 @@ import Track from '../Track/Track';
 import { PopupElements } from './ModalPopup/PerformerPopup';
 import * as S from './TrackList.Styles';
 import CenterBlock from './CenterBlock';
+import SkeletonTrack from '../Skeleton/SkeletonTrack';
 export default function TrackList(props) {
   const [selectedPopUp, setSelectedPopUp] = useState(null);
-  console.log(props.trackData);
   const getPopUp = (popupType) => {
     if (selectedPopUp === popupType) {
       setSelectedPopUp(null);
     } else {
       setSelectedPopUp(popupType);
     }
+  };
+
+  const selectTrack = (el) => {
+    props.setSelectedTracks(el);
+    console.log(props.selectedTrack);
   };
 
   return (
@@ -59,17 +64,25 @@ export default function TrackList(props) {
         </S.ContentTitle>
       </S.CenterBlockContent>
       <S.ContentPlaylist>
-        {props.trackData.map((el) => (
-          <Track
-            key={el.id}
-            name={el.name}
-            id={el.id}
-            author={el.author}
-            album={el.album}
-            duration={el.duration_in_seconds}
-            url={el.track_file}
-          />
-        ))}
+        <p>{props.fetchError}</p>
+
+        {props.loadingPage
+          ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+              <SkeletonTrack key={n} />
+            ))
+          : props.trackData.map((el) => (
+              <Track
+                onClick={() => selectTrack(el)}
+                {...props}
+                key={el.id}
+                name={el.name}
+                id={el.id}
+                author={el.author}
+                album={el.album}
+                duration={el.duration_in_seconds}
+                url={el.track_file}
+              />
+            ))}
       </S.ContentPlaylist>
     </CenterBlock>
   );
