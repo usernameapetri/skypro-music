@@ -12,6 +12,11 @@ export const Container = styled.div`
   margin: 0 auto;
   position: relative;
   background-color: #181818;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Main = styled.main`

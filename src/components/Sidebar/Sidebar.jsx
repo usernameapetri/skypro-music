@@ -1,25 +1,17 @@
-import { useState } from 'react';
 import imgPlaylist01 from '../../assets/playlist01.png';
 import imgPlaylist02 from '../../assets/playlist02.png';
 import imgPlaylist03 from '../../assets/playlist03.png';
-import { useEffect } from 'react';
 import SkeletonSidebar from '../Skeleton/SkeletonSidebar';
 import * as S from './Sidebar.Styles';
 import SidebarBlock from './SidebarBlock';
 import SidebarContent from './SideabrContent';
 
-export default function Sidebar() {
-  const [sidebar, setSidebar] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setSidebar(true);
-    }, 3000);
-  });
-
+export default function Sidebar(props) {
   return (
     <SidebarBlock>
-      {sidebar && (
+      {props.loadingPage ? (
+        <SkeletonSidebar />
+      ) : (
         <SidebarContent>
           <S.SidebarItem>
             <S.SidebarLink to="/category/1">
@@ -38,8 +30,6 @@ export default function Sidebar() {
           </S.SidebarItem>
         </SidebarContent>
       )}
-
-      {!sidebar && <SkeletonSidebar />}
     </SidebarBlock>
   );
 }
