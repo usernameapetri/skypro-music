@@ -9,6 +9,10 @@ export const Bar = styled.div`
   background: rgba(28, 28, 28, 0.5);
 `;
 
+export const Audio = styled.audio`
+  display: none;
+`;
+
 export const BarContent = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
@@ -81,8 +85,18 @@ export const PlayerBtnPrev = styled(PlayerBtn)`
 `;
 
 export const PlayerBtnPrevSvg = styled(Icon)`
-  width: 15px;
-  height: 14px;
+  cursor: pointer;
+  path {
+    fill: #d9d9d9;
+  }
+
+  &:hover path {
+    fill: #696969;
+  }
+
+  &:active path {
+    fill: #d9d9d9;
+  }
 `;
 
 export const PlayerBtnPlay = styled(PlayerBtn)`
@@ -90,9 +104,21 @@ export const PlayerBtnPlay = styled(PlayerBtn)`
 `;
 
 export const PlayerBtnPlaySvg = styled(Icon)`
-  width: 22px;
-  height: 20px;
-  fill: #d9d9d9;
+  &:hover path {
+    fill: #696969;
+  }
+
+  &:active path {
+    fill: #d9d9d9;
+  }
+`;
+export const PlayerBtnStopSvg = styled(Icon)`
+  &:hover rect {
+    fill: #696969;
+  }
+  &:active rect {
+    fill: #d9d9d9;
+  }
 `;
 
 export const PlayerBtnNext = styled(PlayerBtn)`
@@ -101,10 +127,18 @@ export const PlayerBtnNext = styled(PlayerBtn)`
 `;
 
 export const PlayerBtnNextSvg = styled(Icon)`
-  width: 15px;
-  height: 14px;
-  fill: inherit;
-  stroke: #d9d9d9;
+  cursor: pointer;
+  path {
+    fill: #d9d9d9;
+  }
+
+  &:hover path {
+    fill: #696969;
+  }
+
+  &:active path {
+    fill: #d9d9d9;
+  }
 `;
 
 export const PlayerBtnRepeat = styled(PlayerBtn)`
@@ -112,10 +146,25 @@ export const PlayerBtnRepeat = styled(PlayerBtn)`
 `;
 
 export const PlayerBtnRepeatSvg = styled(Icon)`
-  width: 18px;
-  height: 12px;
-  fill: transparent;
-  stroke: #696969;
+  cursor: pointer;
+  path {
+    fill: ${(props) => (props.isTrackRepeat ? '#ffffff' : '#696969')};
+  }
+  &:hover path {
+    fill: ${(props) => (props.isTrackRepeat ? '#ffffff' : '#acacac')};
+  }
+
+  &:active path {
+    fill: #ffffff;
+  }
+
+  ${(props) =>
+    props.isTrackRepeat &&
+    `
+    &:active path {
+      fill: #ffffff;
+    }
+  `}
 `;
 
 export const PlayerBtnShuffle = styled(PlayerBtn)`
@@ -128,10 +177,18 @@ export const PlayerBtnShuffle = styled(PlayerBtn)`
 `;
 
 export const PlayerBtnShuffleSvg = styled(Icon)`
-  width: 19px;
-  height: 12px;
-  fill: transparent;
-  stroke: #696969;
+  cursor: pointer;
+  path {
+    fill: #696969;
+  }
+
+  &:hover path {
+    fill: #acacac;
+  }
+
+  &:active path {
+    fill: #ffffff;
+  }
 `;
 
 // -----------------PLAYER TRACK PLAY --------------------
@@ -150,7 +207,7 @@ export const TrackPlayContain = styled.div`
   width: auto;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: auto 1fr;
+  -ms-grid-columns: auto 2fr;
   grid-template-columns: auto 1fr;
   grid-template-areas: 'image author' 'image album';
   -webkit-box-align: center;
@@ -229,7 +286,6 @@ export const TrackPlayLikeDis = styled.div`
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-left: 26%;
 `;
 
 export const TrackPlayLike = styled.div`
@@ -237,15 +293,18 @@ export const TrackPlayLike = styled.div`
 `;
 
 export const TrackPlayLikeSvg = styled(Icon)`
-  width: 14px;
-  height: 12px;
-  fill: transparent;
-  stroke: #696969;
+  cursor: pointer;
+  path {
+    stroke: #696969;
+  }
 
-  &:active {
+  &:hover path {
+    stroke: #acacac;
+  }
+
+  &:active path {
     fill: #696969;
     stroke: #ffffff;
-    cursor: pointer;
   }
 `;
 
@@ -254,62 +313,48 @@ export const TrackPlayDislike = styled(TrackPlayLike)`
 `;
 
 export const TrackPlayDislikeSvg = styled(Icon)`
-  width: 14.34px;
-  height: 13px;
-  fill: transparent;
-  stroke: #696969;
-  &:active {
+  cursor: pointer;
+  path {
+    stroke: #696969;
+  }
+
+  &:hover path {
+    stroke: #acacac;
+  }
+
+  &:active path {
     fill: #696969;
     stroke: #ffffff;
-    cursor: pointer;
   }
 `;
 
-//----------------------VOLUME-------------------------
-
-export const BarVolumeBlock = styled.div`
-  width: auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
+export const DurationTrackBlock = styled.div`
+  position: absolute;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 0 92px 0 0;
+  gap: 5px;
+  top: 89%;
+  left: 95%;
 `;
 
-export const VolumeContent = styled.div`
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: end;
-  -ms-flex-pack: end;
-  justify-content: end;
+export const CurrentTrackTime = styled.div`
+  color: white;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: StratosSkyeng;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0.016px;
 `;
+export const DurationTrackTime = styled.div`
+  color: white;
 
-export const VolumeImage = styled.div`
-  width: 13px;
-  height: 18px;
-  margin-right: 17px;
-`;
+  font-variant-numeric: lining-nums proportional-nums;
 
-export const VolumeSvg = styled(Icon)`
-  width: 13px;
-  height: 18px;
-  fill: transparent;
-`;
-
-export const VolumeProgress = styled.div`
-  width: 109px;
-`;
-
-export const VolumeProgressLine = styled.input`
-  width: 109px;
+  font-family: StratosSkyeng;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0.016px;
 `;

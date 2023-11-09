@@ -1,18 +1,20 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import AppRoutes from './Routes';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
+import { getTrackData } from './api/api';
 
 function App() {
   const [trackList, setTrackList] = useState([]);
   const [isLoadingPage, setisLoadingPage] = useState(true);
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [isFetchError, setFetchError] = useState(null);
-  const getTrackData = () => {
-    axios
-      .get('https://skypro-music-api.skyeng.tech/catalog/track/all/')
+
+  useEffect(() => {
+    setisLoadingPage(true);
+    getTrackData()
       .then((response) => {
         setTrackList(response.data);
+        setFetchError(null);
       })
       .catch((error) => {
         setFetchError(error.message);
@@ -20,10 +22,6 @@ function App() {
       .finally(() => {
         setisLoadingPage(false);
       });
-  };
-
-  useEffect(() => {
-    getTrackData();
   }, []);
 
   return (

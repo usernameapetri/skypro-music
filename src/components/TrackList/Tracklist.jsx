@@ -7,17 +7,13 @@ import CenterBlock from './CenterBlock';
 import SkeletonTrack from '../Skeleton/SkeletonTrack';
 export default function TrackList(props) {
   const [selectedPopUp, setSelectedPopUp] = useState(null);
+
   const getPopUp = (popupType) => {
     if (selectedPopUp === popupType) {
       setSelectedPopUp(null);
     } else {
       setSelectedPopUp(popupType);
     }
-  };
-
-  const selectTrack = (el) => {
-    props.setSelectedTracks(el);
-    console.log(props.selectedTrack);
   };
 
   return (
@@ -72,7 +68,7 @@ export default function TrackList(props) {
             ))
           : props.trackData.map((el) => (
               <Track
-                onClick={() => selectTrack(el)}
+                onClick={() => props.setSelectedTracks(el)}
                 {...props}
                 key={el.id}
                 name={el.name}
