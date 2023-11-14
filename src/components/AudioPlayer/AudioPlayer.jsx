@@ -1,78 +1,217 @@
+import { useEffect, useRef, useState } from 'react';
 import { Icon } from '../../Icons/Icon';
 import SkeletonBar from '../Skeleton/SkeletonBar';
+import VolumeProgressLine from './VolumeProgressLine/VolumeProgressLine';
 import * as S from './AudioPlayer.Styles';
+import BarPlayerProgress from './BarPlayerProgress/BarPlayerProgress';
+
 export default function AudioPlayer(props) {
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isTrackRepeat, setIsTrackRepeat] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [volume, setVolume] = useState(0.5);
+
+  function formatDuration(durationInSeconds) {
+    const minutes = Math.floor(durationInSeconds / 60);
+    const seconds = Math.floor(durationInSeconds % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    audioRef.current.play();
+    setIsPlaying(true);
+  }, [props.selectedTrack.track_file]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    const setAudioData = () => {
+      setDuration(audio.duration);
+    };
+
+    const setTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+
+    audio.addEventListener('loadedmetadata', setAudioData);
+    audio.addEventListener('timeupdate', setTimeUpdate);
+
+    return () => {
+      audio.removeEventListener('loadedmetadata', setAudioData);
+      audio.removeEventListener('timeupdate', setTimeUpdate);
+    };
+  }, [audioRef]);
+  useEffect(() => {
+    const audio = audioRef.current;
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+
+    if (audio) {
+      audio.addEventListener('timeupdate', handleTimeUpdate);
+    }
+
+    return () => {
+      if (audio) {
+        audio.removeEventListener('timeupdate', handleTimeUpdate);
+      }
+    };
+  }, [audioRef]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    const handleVolumeUpdate = () => {
+      setVolume(audio.cursor.volume);
+
+      if (audio) {
+        audio.addEventListener('volumeupdate', handleVolumeUpdate);
+
+        return () => {
+          if (audio) {
+            audio.removeEventListener('volumeupdate', handleVolumeUpdate);
+          }
+        };
+      }
+    };
+  }, [audioRef]);
+
+  const handleVolumeChange = (event) => {
+    const newVolume = event.target.value / 100;
+    setVolume(newVolume);
+    audioRef.current.volume = newVolume;
+  };
+
+  const handleProgressChange = (event) => {
+    const audio = audioRef.current;
+    const newTime = event.target.value;
+    setCurrentTime(newTime);
+    audio.currentTime = newTime;
+  };
+
+  const handleStart = () => {
+    audioRef.current.play();
+    setIsPlaying(true);
+  };
+
+  const handleStop = () => {
+    audioRef.current.pause();
+    setIsPlaying(false);
+  };
+
+  const handleTrackRepeat = () => {
+    const audio = audioRef.current;
+    audio.loop = true;
+    setIsTrackRepeat(true);
+  };
+
+  const handleTrackNoRepeat = () => {
+    const audio = audioRef.current;
+    audio.loop = false;
+    setIsTrackRepeat(false);
+  };
+  const trackIsRepeat = isTrackRepeat ? handleTrackNoRepeat : handleTrackRepeat;
+  const togglePlay = isPlaying ? handleStop : handleStart;
+
   return (
-    <S.Bar>
-      <S.BarContent>
-        <S.BarPlayerProgress></S.BarPlayerProgress>
-        <S.BarPlayerBlock>
-          <S.BarPlayer className="player">
-            <S.PlayerControls>
-              <S.PlayerBtnPrev>
-                <S.PlayerBtnPrevSvg name="prev" alt="prev" />
-              </S.PlayerBtnPrev>
-              <S.PlayerBtnPlay className="_btn">
-                <S.PlayerBtnPlaySvg name="play" alt="play" />
-              </S.PlayerBtnPlay>
-              <S.PlayerBtnNext>
-                <S.PlayerBtnNextSvg name="next" alt="next" />
-              </S.PlayerBtnNext>
-              <S.PlayerBtnRepeat className="_btn-icon">
-                <S.PlayerBtnRepeatSvg name="repeat" alt="repeat" />
-              </S.PlayerBtnRepeat>
-              <S.PlayerBtnShuffle className="_btn-icon">
-                <S.PlayerBtnShuffleSvg name="shuffle" alt="shuffle" />
-              </S.PlayerBtnShuffle>
-            </S.PlayerControls>
+    <>
+      <S.Audio
+        controls
+        ref={audioRef}
+        src={props.selectedTrack.track_file}
+        type="audio/mpeg"
+      ></S.Audio>
+      <S.Bar>
+        <S.BarContent>
+          <BarPlayerProgress
+            duration={duration}
+            handleProgressChange={handleProgressChange}
+            currentTime={currentTime}
+          />
+          <S.BarPlayerBlock>
+            <S.BarPlayer className="player">
+              <S.PlayerControls>
+                <S.PlayerBtnPrev onClick={() => alert('В работе ')}>
+                  <S.PlayerBtnPrevSvg name="prev" alt="prev" />
+                </S.PlayerBtnPrev>
+                <S.PlayerBtnPlay onClick={() => togglePlay()} className="_btn">
+                  {isPlaying ? (
+                    <S.PlayerBtnStopSvg name="stop" />
+                  ) : (
+                    <S.PlayerBtnPlaySvg name="play" />
+                  )}
+                </S.PlayerBtnPlay>
+                <S.PlayerBtnNext onClick={() => alert('В работе ')}>
+                  <S.PlayerBtnNextSvg name="next" alt="next" />
+                </S.PlayerBtnNext>
+                <S.PlayerBtnRepeat
+                  onClick={trackIsRepeat}
+                  className="_btn-icon"
+                >
+                  <S.PlayerBtnRepeatSvg
+                    isTrackRepeat={isTrackRepeat}
+                    name="repeat"
+                    alt="repeat"
+                  />
+                </S.PlayerBtnRepeat>
+                <S.PlayerBtnShuffle onClick={() => alert('В работе ')}>
+                  <S.PlayerBtnShuffleSvg name="shuffle" alt="shuffle" />
+                </S.PlayerBtnShuffle>
+              </S.PlayerControls>
 
-            <S.PlayerTrackPlay>
-              {props.loadingPage ? (
-                <SkeletonBar />
-              ) : (
-                <S.TrackPlayContain>
-                  <S.TrackPlayImage>
-                    <Icon name="note" className="track-play__svg" alt="music" />
-                  </S.TrackPlayImage>
-                  <S.TrackPlayAuthor>
-                    <S.TrackPlayAuthorLink>
-                      {props.selectedTrack.author}
-                    </S.TrackPlayAuthorLink>
-                  </S.TrackPlayAuthor>
-                  <S.TrackPlayAlbum>
-                    <S.TrackPlayAlbumLink>
-                      {props.selectedTrack.album}
-                    </S.TrackPlayAlbumLink>
-                  </S.TrackPlayAlbum>
-                </S.TrackPlayContain>
-              )}
+              <S.PlayerTrackPlay>
+                {props.loadingPage ? (
+                  <SkeletonBar />
+                ) : (
+                  <S.TrackPlayContain>
+                    <S.TrackPlayImage>
+                      <Icon
+                        name="note"
+                        className="track-play__svg"
+                        alt="music"
+                      />
+                    </S.TrackPlayImage>
+                    <S.TrackPlayAuthor>
+                      <S.TrackPlayAuthorLink>
+                        {props.selectedTrack.author}
+                      </S.TrackPlayAuthorLink>
+                    </S.TrackPlayAuthor>
+                    <S.TrackPlayAlbum>
+                      <S.TrackPlayAlbumLink>
+                        {props.selectedTrack.album}
+                      </S.TrackPlayAlbumLink>
+                    </S.TrackPlayAlbum>
+                  </S.TrackPlayContain>
+                )}
 
-              <S.TrackPlayLikeDis>
-                <S.TrackPlayLike className="_btn-icon">
-                  <S.TrackPlayLikeSvg name="like" alt="like" />
-                </S.TrackPlayLike>
-                <S.TrackPlayDislike className="_btn-icon">
-                  <S.TrackPlayDislikeSvg name="dislike" alt="dislike" />
-                </S.TrackPlayDislike>
-              </S.TrackPlayLikeDis>
-            </S.PlayerTrackPlay>
-          </S.BarPlayer>
-          <S.BarVolumeBlock className="volume">
-            <S.VolumeContent>
-              <S.VolumeImage>
-                <S.VolumeSvg name="volume" alt="volume" />
-              </S.VolumeImage>
-              <S.VolumeProgress>
-                <S.VolumeProgressLine
-                  name="range"
-                  className="_btn"
-                  type="range"
-                />
-              </S.VolumeProgress>
-            </S.VolumeContent>
-          </S.BarVolumeBlock>
-        </S.BarPlayerBlock>
-      </S.BarContent>
-    </S.Bar>
+                <S.TrackPlayLikeDis>
+                  <S.TrackPlayLike
+                    onClick={() => alert('В работе ')}
+                    className="_btn-icon"
+                  >
+                    <S.TrackPlayLikeSvg name="like" alt="like" />
+                  </S.TrackPlayLike>
+                  <S.TrackPlayDislike onClick={() => alert('В работе ')}>
+                    <S.TrackPlayDislikeSvg name="dislike" alt="dislike" />
+                  </S.TrackPlayDislike>
+                </S.TrackPlayLikeDis>
+              </S.PlayerTrackPlay>
+            </S.BarPlayer>
+            <VolumeProgressLine
+              volume={volume}
+              handleVolumeChange={handleVolumeChange}
+            />
+          </S.BarPlayerBlock>
+        </S.BarContent>
+      </S.Bar>
+
+      <S.DurationTrackBlock>
+        <S.CurrentTrackTime>{formatDuration(currentTime)}</S.CurrentTrackTime>
+        <div>/</div>
+        <S.DurationTrackTime>{formatDuration(duration)}</S.DurationTrackTime>
+      </S.DurationTrackBlock>
+    </>
   );
 }
