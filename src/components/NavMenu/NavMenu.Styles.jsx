@@ -7,6 +7,7 @@ export const MainNav = styled.nav`
 `;
 
 export const NavLogo = styled.div`
+  cursor: pointer;
   width: 113.33px;
   height: 43px;
   padding: 13px 0 13px 0;
@@ -15,6 +16,7 @@ export const NavLogo = styled.div`
 `;
 
 export const LogoImage = styled.img`
+  cursor: pointer;
   width: 113.33px;
   height: 17px;
   color: #181818;

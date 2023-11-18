@@ -24,7 +24,6 @@ export const ModalBlock = styled.div`
 
 export const ModalFormLogin = styled.form`
   width: 366px;
-  height: 439px;
   background-color: #ffffff;
   border-radius: 12px;
   display: -webkit-box;
@@ -44,7 +43,7 @@ export const ModalFormLogin = styled.form`
   }
 `;
 
-export const ModalFormLink = styled.a`
+export const ModalFormLink = styled.div`
   ///---------------------///
   ///--------------------///
   ///---------------------///
@@ -128,7 +127,7 @@ export const ModalBtnEnter = styled.button`
   letter-spacing: -0.054px;
   background-color: #580ea2;
   border-radius: 6px;
-  margin-top: 60px;
+  margin-top: 20px;
   margin-bottom: 20px;
   border: none;
   display: -webkit-box;
@@ -167,6 +166,10 @@ export const ModalBtnEnter = styled.button`
 
   &:active {
     background-color: #271a58;
+  }
+
+  &:disabled {
+    background-color: gray;
   }
 `;
 
@@ -219,4 +222,14 @@ export const ModalBtnSingup = styled.button`
   &:active {
     background-color: #d9d9d9;
   }
+`;
+
+export const Error = styled.div`
+  color: coral;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 20px;
+  text-align: left;
+  transition-timing-function: linear;
 `;
