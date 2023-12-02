@@ -5,22 +5,15 @@ import Login from './views/login/Login';
 import Reg from './views/reg/Reg';
 import Category from './views/Playlist-of-the-day/Category';
 import { ProtectedRoute } from './ProtectedRoute';
-import { Main } from './layout/PageFrame.Styles';
-
-function AppRoutes(props) {
+import PageFrame from './layout/PageFrame';
+function AppRoutes() {
   return (
     <Routes>
       <Route
         path="/"
         element={
           <ProtectedRoute>
-            <MainPage
-              selectedTrack={props.selectedTrack}
-              setSelectedTracks={props.setSelectedTracks}
-              fetchError={props.fetchError}
-              trackData={props.trackData}
-              loadingPage={props.loadingPage}
-            />
+            <MainPage />
           </ProtectedRoute>
         }
       />
@@ -30,11 +23,7 @@ function AppRoutes(props) {
         path="/favorites"
         element={
           <ProtectedRoute>
-            <Main
-              fetchError={props.fetchError}
-              trackData={props.trackData}
-              loadingPage={props.loadingPage}
-            />
+            <PageFrame />
           </ProtectedRoute>
         }
       />

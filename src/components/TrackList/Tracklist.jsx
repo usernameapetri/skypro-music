@@ -5,9 +5,9 @@ import { PopupElements } from './ModalPopup/PerformerPopup';
 import * as S from './TrackList.Styles';
 import CenterBlock from './CenterBlock';
 import SkeletonTrack from '../Skeleton/SkeletonTrack';
+
 export default function TrackList(props) {
   const [selectedPopUp, setSelectedPopUp] = useState(null);
-
   const getPopUp = (popupType) => {
     if (selectedPopUp === popupType) {
       setSelectedPopUp(null);
@@ -68,7 +68,7 @@ export default function TrackList(props) {
             ))
           : props.trackData.map((el) => (
               <Track
-                onClick={() => props.setSelectedTracks(el)}
+                onClick={() => props.setSelectedTrack(el)}
                 {...props}
                 key={el.id}
                 name={el.name}

@@ -4,7 +4,6 @@ import Track from '../../components/Track/Track';
 import { useParams } from 'react-router-dom';
 export default function PlayOfTheDay() {
   const { id } = useParams();
-  console.log(id);
   return (
     <PageFrame>
       <S.CenterBlockH2>

@@ -1,11 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import { Icon } from '../../Icons/Icon';
 import SkeletonBar from '../Skeleton/SkeletonBar';
 import VolumeProgressLine from './VolumeProgressLine/VolumeProgressLine';
 import * as S from './AudioPlayer.Styles';
 import BarPlayerProgress from './BarPlayerProgress/BarPlayerProgress';
+import { TrackContext } from '../../Context/track';
 
-export default function AudioPlayer(props) {
+export default function AudioPlayer() {
+  const { isLoadingPage, selectedTrack } = useContext(TrackContext);
+  if (!selectedTrack) {
+    return null;
+  }
+
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isTrackRepeat, setIsTrackRepeat] = useState(false);
@@ -22,7 +28,7 @@ export default function AudioPlayer(props) {
   useEffect(() => {
     audioRef.current.play();
     setIsPlaying(true);
-  }, [props.selectedTrack.track_file]);
+  }, [selectedTrack.track_file]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -120,7 +126,7 @@ export default function AudioPlayer(props) {
       <S.Audio
         controls
         ref={audioRef}
-        src={props.selectedTrack.track_file}
+        src={selectedTrack.track_file}
         type="audio/mpeg"
       ></S.Audio>
       <S.Bar>
@@ -162,7 +168,7 @@ export default function AudioPlayer(props) {
               </S.PlayerControls>
 
               <S.PlayerTrackPlay>
-                {props.loadingPage ? (
+                {isLoadingPage ? (
                   <SkeletonBar />
                 ) : (
                   <S.TrackPlayContain>
@@ -175,12 +181,12 @@ export default function AudioPlayer(props) {
                     </S.TrackPlayImage>
                     <S.TrackPlayAuthor>
                       <S.TrackPlayAuthorLink>
-                        {props.selectedTrack.author}
+                        {selectedTrack.author}
                       </S.TrackPlayAuthorLink>
                     </S.TrackPlayAuthor>
                     <S.TrackPlayAlbum>
                       <S.TrackPlayAlbumLink>
-                        {props.selectedTrack.album}
+                        {selectedTrack.album}
                       </S.TrackPlayAlbumLink>
                     </S.TrackPlayAlbum>
                   </S.TrackPlayContain>
