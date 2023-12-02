@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Icon } from '../../Icons/Icon';
 
 export const PlaylistItem = styled.div`
@@ -6,6 +6,30 @@ export const PlaylistItem = styled.div`
   width: 100%;
   display: block;
   margin-bottom: 12px;
+`;
+
+const pulseAnimation = keyframes`
+    0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.7);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
+export const Circle = styled.div`
+  margin-left: 5px;
+  width: 50px;
+  height: 10px;
+  background-color: #b672ff;
+  border-radius: 60%;
+`;
+
+export const PulsatingCircle = styled(Circle)`
+  animation: ${pulseAnimation} 0.5s infinite;
 `;
 
 export const PlayListTrack = styled.div`
