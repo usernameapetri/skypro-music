@@ -1,22 +1,33 @@
-import { useEffect, useRef, useState, useContext } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Icon } from '../../Icons/Icon';
 import SkeletonBar from '../Skeleton/SkeletonBar';
 import VolumeProgressLine from './VolumeProgressLine/VolumeProgressLine';
 import * as S from './AudioPlayer.Styles';
 import BarPlayerProgress from './BarPlayerProgress/BarPlayerProgress';
-import { TrackContext } from '../../Context/track';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setShuffled,
+  prevTrack,
+  nextTrack,
+  play,
+  pause,
+  selectCurrentTrack,
+  selectIsLoading,
+  selectPlaing,
+} from '../../redux/slicers/dataSlicers';
 
 export default function AudioPlayer() {
-  const { isLoadingPage, selectedTrack } = useContext(TrackContext);
-  if (!selectedTrack) {
-    return null;
-  }
+  const dispatch = useDispatch();
+
+  const currentTrack = useSelector(selectCurrentTrack);
+  const plaing = useSelector(selectPlaing);
+  const isLoadingPage = useSelector(selectIsLoading);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isTrackRepeat, setIsTrackRepeat] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
   const [volume, setVolume] = useState(0.5);
+  const [isShuffled, setIsShuffled] = useState(false);
 
   function formatDuration(durationInSeconds) {
     const minutes = Math.floor(durationInSeconds / 60);
@@ -25,64 +36,32 @@ export default function AudioPlayer() {
   }
   const audioRef = useRef(null);
 
-  useEffect(() => {
-    audioRef.current.play();
-    setIsPlaying(true);
-  }, [selectedTrack.track_file]);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-
-    const setAudioData = () => {
-      setDuration(audio.duration);
-    };
-
-    const setTimeUpdate = () => {
-      setCurrentTime(audio.currentTime);
-    };
-
-    audio.addEventListener('loadedmetadata', setAudioData);
-    audio.addEventListener('timeupdate', setTimeUpdate);
-
-    return () => {
-      audio.removeEventListener('loadedmetadata', setAudioData);
-      audio.removeEventListener('timeupdate', setTimeUpdate);
-    };
-  }, [audioRef]);
-  useEffect(() => {
-    const audio = audioRef.current;
-    const handleTimeUpdate = () => {
-      setCurrentTime(audio.currentTime);
-    };
-
-    if (audio) {
-      audio.addEventListener('timeupdate', handleTimeUpdate);
-    }
-
-    return () => {
-      if (audio) {
-        audio.removeEventListener('timeupdate', handleTimeUpdate);
-      }
-    };
-  }, [audioRef]);
+  const [display, setDisplay] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
 
     const handleVolumeUpdate = () => {
       setVolume(audio.cursor.volume);
-
-      if (audio) {
-        audio.addEventListener('volumeupdate', handleVolumeUpdate);
-
-        return () => {
-          if (audio) {
-            audio.removeEventListener('volumeupdate', handleVolumeUpdate);
-          }
-        };
-      }
     };
-  }, [audioRef]);
+
+    const setAudioData = () => {
+      setDuration(audio.duration);
+    };
+
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+    audio.addEventListener('volumeupdate', handleVolumeUpdate);
+    audio.addEventListener('loadedmetadata', setAudioData);
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+
+    return () => {
+      audio.removeEventListener('volumeupdate', handleVolumeUpdate);
+      audio.removeEventListener('loadedmetadata', setAudioData);
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+    };
+  }, []);
 
   const handleVolumeChange = (event) => {
     const newVolume = event.target.value / 100;
@@ -97,14 +76,29 @@ export default function AudioPlayer() {
     audio.currentTime = newTime;
   };
 
-  const handleStart = () => {
-    audioRef.current.play();
-    setIsPlaying(true);
-  };
+  function handleStart() {
+    if (audioRef.current) {
+      audioRef.current
+        .play()
+        .then(() => {
+          dispatch(play());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
+  useEffect(() => {
+    handleStart();
+
+    if (currentTrack.track_file) {
+      setDisplay(true);
+    }
+  }, [currentTrack]);
 
   const handleStop = () => {
     audioRef.current.pause();
-    setIsPlaying(false);
+    dispatch(pause());
   };
 
   const handleTrackRepeat = () => {
@@ -118,15 +112,19 @@ export default function AudioPlayer() {
     audio.loop = false;
     setIsTrackRepeat(false);
   };
-  const trackIsRepeat = isTrackRepeat ? handleTrackNoRepeat : handleTrackRepeat;
-  const togglePlay = isPlaying ? handleStop : handleStart;
 
+  const trackIsRepeat = isTrackRepeat ? handleTrackNoRepeat : handleTrackRepeat;
+  const togglePlay = plaing ? handleStop : handleStart;
+  const toggleShuffledIcon = () => {
+    setIsShuffled(!isShuffled);
+  };
   return (
-    <>
+    <div style={{ display: display ? '' : 'none' }}>
       <S.Audio
         controls
+        autoPlay
         ref={audioRef}
-        src={selectedTrack.track_file}
+        src={currentTrack.track_file}
         type="audio/mpeg"
       ></S.Audio>
       <S.Bar>
@@ -139,17 +137,17 @@ export default function AudioPlayer() {
           <S.BarPlayerBlock>
             <S.BarPlayer className="player">
               <S.PlayerControls>
-                <S.PlayerBtnPrev onClick={() => alert('В работе ')}>
+                <S.PlayerBtnPrev onClick={() => dispatch(prevTrack())}>
                   <S.PlayerBtnPrevSvg name="prev" alt="prev" />
                 </S.PlayerBtnPrev>
                 <S.PlayerBtnPlay onClick={() => togglePlay()} className="_btn">
-                  {isPlaying ? (
+                  {plaing ? (
                     <S.PlayerBtnStopSvg name="stop" />
                   ) : (
                     <S.PlayerBtnPlaySvg name="play" />
                   )}
                 </S.PlayerBtnPlay>
-                <S.PlayerBtnNext onClick={() => alert('В работе ')}>
+                <S.PlayerBtnNext onClick={() => dispatch(nextTrack())}>
                   <S.PlayerBtnNextSvg name="next" alt="next" />
                 </S.PlayerBtnNext>
                 <S.PlayerBtnRepeat
@@ -162,8 +160,16 @@ export default function AudioPlayer() {
                     alt="repeat"
                   />
                 </S.PlayerBtnRepeat>
-                <S.PlayerBtnShuffle onClick={() => alert('В работе ')}>
-                  <S.PlayerBtnShuffleSvg name="shuffle" alt="shuffle" />
+                <S.PlayerBtnShuffle
+                  onClick={() => {
+                    toggleShuffledIcon(), dispatch(setShuffled(!isShuffled));
+                  }}
+                >
+                  <S.PlayerBtnShuffleSvg
+                    isShuffled={isShuffled}
+                    name="shuffle"
+                    alt="shuffle"
+                  />
                 </S.PlayerBtnShuffle>
               </S.PlayerControls>
 
@@ -181,12 +187,12 @@ export default function AudioPlayer() {
                     </S.TrackPlayImage>
                     <S.TrackPlayAuthor>
                       <S.TrackPlayAuthorLink>
-                        {selectedTrack.author}
+                        {currentTrack.author}
                       </S.TrackPlayAuthorLink>
                     </S.TrackPlayAuthor>
                     <S.TrackPlayAlbum>
                       <S.TrackPlayAlbumLink>
-                        {selectedTrack.album}
+                        {currentTrack.album}
                       </S.TrackPlayAlbumLink>
                     </S.TrackPlayAlbum>
                   </S.TrackPlayContain>
@@ -218,6 +224,6 @@ export default function AudioPlayer() {
         <div>/</div>
         <S.DurationTrackTime>{formatDuration(duration)}</S.DurationTrackTime>
       </S.DurationTrackBlock>
-    </>
+    </div>
   );
 }

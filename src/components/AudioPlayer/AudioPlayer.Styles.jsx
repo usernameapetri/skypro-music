@@ -179,16 +179,23 @@ export const PlayerBtnShuffle = styled(PlayerBtn)`
 export const PlayerBtnShuffleSvg = styled(Icon)`
   cursor: pointer;
   path {
-    fill: #696969;
+    fill: ${(props) => (props.isShuffled ? '#ffffff' : '#696969')};
   }
-
   &:hover path {
-    fill: #acacac;
+    fill: ${(props) => (props.isShuffled ? '#ffffff' : '#acacac')};
   }
 
   &:active path {
     fill: #ffffff;
   }
+
+  ${(props) =>
+    props.isShuffled &&
+    `
+    &:active path {
+      fill: #ffffff;
+    }
+  `}
 `;
 
 // -----------------PLAYER TRACK PLAY --------------------

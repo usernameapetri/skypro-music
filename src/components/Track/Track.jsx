@@ -12,11 +12,11 @@ export default function Track(props) {
 
   useEffect(() => {
     formatDuration(props.duration);
-  }, []);
+  }, [props.duration]);
 
   return (
     <S.PlaylistItem onClick={props.onClick}>
-      <S.PlayListTrack className="track">
+      <S.PlayListTrack>
         <S.TrackTitle>
           <S.TrackTitleImage>
             <Icon className="track__title-svg" alt="music" name="note" />

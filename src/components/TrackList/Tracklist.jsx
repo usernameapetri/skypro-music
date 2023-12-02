@@ -5,9 +5,21 @@ import { PopupElements } from './ModalPopup/PerformerPopup';
 import * as S from './TrackList.Styles';
 import CenterBlock from './CenterBlock';
 import SkeletonTrack from '../Skeleton/SkeletonTrack';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import {
+  setCurrentTrack,
+  selectIsLoading,
+  selectFetchError,
+} from '../../redux/slicers/dataSlicers';
 
-export default function TrackList(props) {
+export default function TrackList() {
+  const dispatch = useDispatch();
+  const loadingPage = useSelector(selectIsLoading);
+  const fetchError = useSelector(selectFetchError);
+
   const [selectedPopUp, setSelectedPopUp] = useState(null);
+
   const getPopUp = (popupType) => {
     if (selectedPopUp === popupType) {
       setSelectedPopUp(null);
@@ -15,6 +27,12 @@ export default function TrackList(props) {
       setSelectedPopUp(popupType);
     }
   };
+
+  const setTrack = (e) => {
+    dispatch(setCurrentTrack(e));
+  };
+
+  const dataTrack = useSelector((state) => state.musicData.tracksData);
 
   return (
     <CenterBlock>
@@ -60,16 +78,15 @@ export default function TrackList(props) {
         </S.ContentTitle>
       </S.CenterBlockContent>
       <S.ContentPlaylist>
-        <p>{props.fetchError}</p>
+        <p>{fetchError}</p>
 
-        {props.loadingPage
+        {loadingPage
           ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
               <SkeletonTrack key={n} />
             ))
-          : props.trackData.map((el) => (
+          : dataTrack.map((el) => (
               <Track
-                onClick={() => props.setSelectedTrack(el)}
-                {...props}
+                onClick={() => setTrack(el)}
                 key={el.id}
                 name={el.name}
                 id={el.id}
