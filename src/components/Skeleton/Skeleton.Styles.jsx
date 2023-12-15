@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 //----------------SKELETON BAR------------------------
 export const SkeletonWrapper = styled.div`
   display: grid;

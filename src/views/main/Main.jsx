@@ -1,46 +1,40 @@
 import TrackList from '../../components/TrackList/Tracklist';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import NavMenu from '../../components/NavMenu/NavMenu';
 import * as S from './Main.Styles';
 import { getTrackData } from '../../api/api';
-import { TrackContext } from '../../Context/track';
+import { useDispatch } from 'react-redux';
+import {
+  setTracksData,
+  setIsLoadingPage,
+  setFetchError,
+} from '../../redux/slicers/dataSlicers';
 
 function MainPage() {
-  const data = useContext(TrackContext);
+  const dispatch = useDispatch();
 
-
-
-
-  
   useEffect(() => {
-    data.setisLoadingPage(true);
+    dispatch(setIsLoadingPage(true));
     getTrackData()
       .then((response) => {
-        data.setTrackList(response.data);
-        data.setFetchError(null);
+        dispatch(setTracksData(response.data));
       })
       .catch((error) => {
-        data.setFetchError(error.message);
+        dispatch(setFetchError(error.message));
       })
       .finally(() => {
-        data.setisLoadingPage(false);
+        dispatch(setIsLoadingPage(false));
       });
-  }, []);
+  }, [dispatch]);
 
   return (
     <S.Wrapper>
       <S.Container>
         <S.Main>
           <NavMenu />
-          <TrackList
-            selectedTrack={data.selectedTrack}
-            setSelectedTrack={data.setSelectedTrack}
-            fetchError={data.isFetchError}
-            trackData={data.trackList}
-            loadingPage={data.isLoadingPage}
-          />
-          <Sidebar loadingPage={data.isLoadingPage} />
+          <TrackList />
+          <Sidebar />
         </S.Main>
         <S.Footer />
       </S.Container>
