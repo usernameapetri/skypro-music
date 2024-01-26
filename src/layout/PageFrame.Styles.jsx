@@ -12,6 +12,8 @@ export const Container = styled.div`
   margin: 0 auto;
   position: relative;
   background-color: #181818;
+  overflow: auto;
+  scrollbar-width: none;
 `;
 
 export const Main = styled.main`

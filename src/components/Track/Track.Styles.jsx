@@ -143,8 +143,30 @@ export const TrackTimeText = styled.span`
 `;
 
 export const TrackTimeSvg = styled(Icon)`
-  width: 18px;
-  height: 17px;
-  fill: transparent;
-  stroke: #4e4e4e;
+  cursor: pointer;
+  path {
+    stroke: #696969;
+  }
+
+  &:hover path {
+    stroke: #acacac;
+  }
+
+  &:active path {
+    fill: #696969;
+    stroke: #ffffff;
+  }
+`;
+
+export const TrackRegularLike = styled(TrackTimeSvg)`
+  path {
+    fill: #b672ff;
+  }
+`;
+
+export const DefButton = styled.button`
+  background-color: transparent;
+  color: transparent;
+  border: none;
+  padding: auto;
 `;

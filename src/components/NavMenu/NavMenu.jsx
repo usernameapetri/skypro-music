@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import logoImg from '../../assets/logo.png';
 import * as S from './NavMenu.Styles';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Nav() {
-  const [isMenuClicked, setIsMenuClicked] = useState(null);
+  const [isMenuClicked, setIsMenuClicked] = useState(true);
 
   return (
     <S.MainNav>

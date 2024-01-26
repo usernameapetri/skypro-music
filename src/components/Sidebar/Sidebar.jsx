@@ -5,10 +5,8 @@ import SkeletonSidebar from '../Skeleton/SkeletonSidebar';
 import * as S from './Sidebar.Styles';
 import SidebarBlock from './SidebarBlock';
 import SidebarContent from './SideabrContent';
-import { useSelector } from 'react-redux';
-import { selectIsLoading } from '../../redux/slicers/dataSlicers';
-export default function Sidebar() {
-  const loadingPage = useSelector(selectIsLoading);
+
+export default function Sidebar({ loadingPage }) {
   return (
     <SidebarBlock>
       {loadingPage ? (

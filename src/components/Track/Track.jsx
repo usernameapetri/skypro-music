@@ -7,32 +7,64 @@ import {
 } from '../../redux/slicers/dataSlicers';
 
 import { useSelector } from 'react-redux';
+import {
+  useRemoveFavoriteMutation,
+  useAddToFavoritesMutation,
+  useGetAllFavoriteQuery,
+} from '../../services/track';
+
 export default function Track(props) {
   const [trackTime, setTrackTime] = useState(0);
-
-  function formatDuration(durationInSeconds) {
-    const minutes = Math.floor(durationInSeconds / 60);
-    const seconds = durationInSeconds % 60;
-    setTrackTime(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
-  }
   const [isAnimated, setIsAnimated] = useState(false);
   const isPlayng = useSelector(selectPlaing);
   const selectedTrack = useSelector(selectCurrentTrack);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const { data } = useGetAllFavoriteQuery();
+  const favoriteTrack = data;
+  const [addToFavorites] = useAddToFavoritesMutation();
+  const [removeToFavorites] = useRemoveFavoriteMutation();
+
   useEffect(() => {
     formatDuration(props.duration);
   }, [props.duration]);
 
-  const mat = () => {
-    if (props.url === selectedTrack.track_file) {
-      setIsAnimated(true);
-    } else {
-      setIsAnimated(false);
+  useEffect(() => {
+    animationTrack();
+  }, [selectedTrack]);
+
+  useEffect(() => {
+    setIsFavorite(isLiked(props.id, favoriteTrack));
+  }, [props.id, favoriteTrack]);
+
+  const formatDuration = (durationInSeconds) => {
+    const minutes = Math.floor(durationInSeconds / 60);
+    const seconds = durationInSeconds % 60;
+    setTrackTime(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+  };
+
+  const animationTrack = () => {
+    setIsAnimated(props.url === selectedTrack.track_file);
+  };
+
+  const removeToFavoritesHandler = async (e) => {
+    e.stopPropagation();
+    if (removeToFavorites) {
+      await removeToFavorites(props.id);
     }
   };
 
-  useEffect(() => {
-    mat();
-  }, [selectedTrack]);
+  const addToFavoritesHandler = async (e) => {
+    e.stopPropagation();
+
+    if (addToFavorites) {
+      await addToFavorites(props.id);
+    }
+  };
+
+  const isLiked = (id, arr) => {
+    return arr && Array.isArray(arr) && arr.some((item) => item.id === id);
+  };
 
   return (
     <S.PlaylistItem onClick={props.onClick}>
@@ -40,7 +72,7 @@ export default function Track(props) {
         <S.TrackTitle>
           <S.TrackTitleImage>
             {isAnimated ? isPlayng ? <S.PulsatingCircle /> : <S.Circle /> : ''}
-            <Icon className="track__title-svg" alt="music" name="note" />
+            <Icon alt="music" name="note" />
           </S.TrackTitleImage>
           <S.TrackTitleText>
             <S.TrackTitleLink>
@@ -55,7 +87,15 @@ export default function Track(props) {
           <S.TrackAlbumLink>{props.album}</S.TrackAlbumLink>
         </S.TrackAlbum>
         <S.TrackTime>
-          <S.TrackTimeSvg className="track__time-svg" alt="time" name="like" />
+          {isFavorite ? (
+            <S.DefButton onClick={removeToFavoritesHandler}>
+              <S.TrackRegularLike alt="like" name="like" />
+            </S.DefButton>
+          ) : (
+            <S.DefButton onClick={addToFavoritesHandler}>
+              <S.TrackTimeSvg alt="like" name="like" />
+            </S.DefButton>
+          )}
           <S.TrackTimeText>{trackTime}</S.TrackTimeText>
         </S.TrackTime>
       </S.PlayListTrack>
