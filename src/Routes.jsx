@@ -5,7 +5,7 @@ import Login from './views/login/Login';
 import Reg from './views/reg/Reg';
 import Category from './views/Playlist-of-the-day/Category';
 import { ProtectedRoute } from './ProtectedRoute';
-import PageFrame from './layout/PageFrame';
+import Favorites from './views/favorites/Favorites';
 function AppRoutes() {
   return (
     <Routes>
@@ -23,7 +23,7 @@ function AppRoutes() {
         path="/favorites"
         element={
           <ProtectedRoute>
-            <PageFrame />
+            <Favorites />
           </ProtectedRoute>
         }
       />

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '../../Icons/Icon';
-import SkeletonBar from '../Skeleton/SkeletonBar';
+// import SkeletonBar from '../Skeleton/SkeletonBar';
 import VolumeProgressLine from './VolumeProgressLine/VolumeProgressLine';
 import * as S from './AudioPlayer.Styles';
 import BarPlayerProgress from './BarPlayerProgress/BarPlayerProgress';
@@ -12,7 +12,7 @@ import {
   play,
   pause,
   selectCurrentTrack,
-  selectIsLoading,
+  // selectIsLoading,
   selectPlaing,
 } from '../../redux/slicers/dataSlicers';
 
@@ -21,14 +21,14 @@ export default function AudioPlayer() {
 
   const currentTrack = useSelector(selectCurrentTrack);
   const plaing = useSelector(selectPlaing);
-  const isLoadingPage = useSelector(selectIsLoading);
+  // const isLoadingPage = useSelector(selectIsLoading);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isTrackRepeat, setIsTrackRepeat] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [isShuffled, setIsShuffled] = useState(false);
-
+  const [error, setError] = useState('');
   function formatDuration(durationInSeconds) {
     const minutes = Math.floor(durationInSeconds / 60);
     const seconds = Math.floor(durationInSeconds % 60);
@@ -84,7 +84,7 @@ export default function AudioPlayer() {
           dispatch(play());
         })
         .catch((err) => {
-          console.log(err);
+          setError(err);
         });
     }
   }
@@ -174,31 +174,27 @@ export default function AudioPlayer() {
               </S.PlayerControls>
 
               <S.PlayerTrackPlay>
-                {isLoadingPage ? (
+                {/* {isLoadingPage ? (
                   <SkeletonBar />
-                ) : (
-                  <S.TrackPlayContain>
-                    <S.TrackPlayImage>
-                      <Icon
-                        name="note"
-                        className="track-play__svg"
-                        alt="music"
-                      />
-                    </S.TrackPlayImage>
-                    <S.TrackPlayAuthor>
-                      <S.TrackPlayAuthorLink>
-                        {currentTrack.author}
-                      </S.TrackPlayAuthorLink>
-                    </S.TrackPlayAuthor>
-                    <S.TrackPlayAlbum>
-                      <S.TrackPlayAlbumLink>
-                        {currentTrack.album}
-                      </S.TrackPlayAlbumLink>
-                    </S.TrackPlayAlbum>
-                  </S.TrackPlayContain>
-                )}
+                ) : ( */}
+                <S.TrackPlayContain>
+                  <S.TrackPlayImage>
+                    <Icon name="note" className="track-play__svg" alt="music" />
+                  </S.TrackPlayImage>
+                  <S.TrackPlayAuthor>
+                    <S.TrackPlayAuthorLink>
+                      {currentTrack.author}
+                    </S.TrackPlayAuthorLink>
+                  </S.TrackPlayAuthor>
+                  <S.TrackPlayAlbum>
+                    <S.TrackPlayAlbumLink>
+                      {currentTrack.album}
+                    </S.TrackPlayAlbumLink>
+                  </S.TrackPlayAlbum>
+                </S.TrackPlayContain>
+                {/* )} */}
 
-                <S.TrackPlayLikeDis>
+                {/* <S.TrackPlayLikeDis>
                   <S.TrackPlayLike
                     onClick={() => alert('В работе ')}
                     className="_btn-icon"
@@ -208,7 +204,7 @@ export default function AudioPlayer() {
                   <S.TrackPlayDislike onClick={() => alert('В работе ')}>
                     <S.TrackPlayDislikeSvg name="dislike" alt="dislike" />
                   </S.TrackPlayDislike>
-                </S.TrackPlayLikeDis>
+                </S.TrackPlayLikeDis> */}
               </S.PlayerTrackPlay>
             </S.BarPlayer>
             <VolumeProgressLine

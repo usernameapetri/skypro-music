@@ -16,7 +16,7 @@ export const AuthorizationContext = ({ children }) => {
     const storedUserData = localStorage.getItem('user');
 
     if (storedToken) {
-      setToken(storedToken);
+      setToken(JSON.parse(storedToken));
     }
 
     if (storedUserData) {

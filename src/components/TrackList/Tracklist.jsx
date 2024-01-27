@@ -9,13 +9,12 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import {
   setCurrentTrack,
-  selectIsLoading,
   selectFetchError,
 } from '../../redux/slicers/dataSlicers';
 
-export default function TrackList() {
+export default function TrackList({ loadingPage }) {
   const dispatch = useDispatch();
-  const loadingPage = useSelector(selectIsLoading);
+
   const fetchError = useSelector(selectFetchError);
 
   const [selectedPopUp, setSelectedPopUp] = useState(null);
@@ -64,16 +63,12 @@ export default function TrackList() {
       </S.CenterBlockFilter>
 
       <S.CenterBlockContent>
-        <S.ContentTitle className="playlist-title">
+        <S.ContentTitle>
           <S.PlaylistTitleCol width="447px">Трек</S.PlaylistTitleCol>
           <S.PlaylistTitleCol width="321px">ИСПОЛНИТЕЛЬ</S.PlaylistTitleCol>
           <S.PlaylistTitleCol width="245px">АЛЬБОМ</S.PlaylistTitleCol>
           <S.PlaylistTitleColExtra>
-            <S.StyledIcon
-              name="watch"
-              className="playlist-title__svg"
-              alt="time"
-            />
+            <S.StyledIcon name="watch" alt="time" />
           </S.PlaylistTitleColExtra>
         </S.ContentTitle>
       </S.CenterBlockContent>

@@ -5,15 +5,19 @@ import * as Style from './App.Styles';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
+import { trackApi } from './services/track';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Style.GlobalStyle />
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <ApiProvider api={trackApi}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ApiProvider>
     </BrowserRouter>
   </React.StrictMode>,
 );
