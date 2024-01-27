@@ -20,10 +20,17 @@ export default function Track(props) {
   const selectedTrack = useSelector(selectCurrentTrack);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const { data } = useGetAllFavoriteQuery();
-  const favoriteTrack = data;
-  const [addToFavorites] = useAddToFavoritesMutation();
+  const { data: favoriteTracks, refetch: refetchFavoriteTracks } =
+    useGetAllFavoriteQuery();
+
+  const [addToFavorites, error] = useAddToFavoritesMutation();
   const [removeToFavorites] = useRemoveFavoriteMutation();
+
+  if (error?.status === 401) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userData');
+    navigate('/login');
+  }
 
   useEffect(() => {
     formatDuration(props.duration);
@@ -34,8 +41,8 @@ export default function Track(props) {
   }, [selectedTrack]);
 
   useEffect(() => {
-    setIsFavorite(isLiked(props.id, favoriteTrack));
-  }, [props.id, favoriteTrack]);
+    setIsFavorite(isLiked(props.id, favoriteTracks));
+  }, [props.id, favoriteTracks]);
 
   const formatDuration = (durationInSeconds) => {
     const minutes = Math.floor(durationInSeconds / 60);
@@ -51,14 +58,16 @@ export default function Track(props) {
     e.stopPropagation();
     if (removeToFavorites) {
       await removeToFavorites(props.id);
+      refetchFavoriteTracks();
     }
   };
 
   const addToFavoritesHandler = async (e) => {
     e.stopPropagation();
-
     if (addToFavorites) {
       await addToFavorites(props.id);
+      // Обновляем данные избранных треков после добавления лайка
+      refetchFavoriteTracks();
     }
   };
 
