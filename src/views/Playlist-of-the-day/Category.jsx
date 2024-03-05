@@ -2,8 +2,33 @@ import PageFrame from '../../layout/PageFrame';
 import * as S from '../../components/TrackList/TrackList.Styles';
 import Track from '../../components/Track/Track';
 import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectClassicalMusic,
+  selectRockMusic,
+  selectElectronicMusic,
+  setCurrentTrack,
+} from '../../redux/slicers/dataSlicers';
+import { useGetAllFavoriteQuery } from '../../services/track';
+import SkeletonTrack from '../../components/Skeleton/SkeletonTrack';
+
 export default function PlayOfTheDay() {
+  const { data, isLoading } = useGetAllFavoriteQuery();
   const { id } = useParams();
+  const dispatch = useDispatch();
+
+  const trackData =
+    id === '1'
+      ? useSelector(selectClassicalMusic)
+      : id === '2'
+      ? useSelector(selectElectronicMusic)
+      : id === '3'
+      ? useSelector(selectRockMusic)
+      : [];
+
+  const setTrack = (e) => {
+    dispatch(setCurrentTrack(e));
+  };
   return (
     <PageFrame>
       <S.CenterBlockH2>
@@ -31,7 +56,22 @@ export default function PlayOfTheDay() {
         </S.ContentTitle>
       </S.CenterBlockContent>
       <S.ContentPlaylist>
-        <Track />
+        {isLoading
+          ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+              <SkeletonTrack key={n} />
+            ))
+          : trackData.map((el) => (
+              <Track
+                onClick={() => setTrack(el)}
+                key={el.id}
+                name={el.name}
+                id={el.id}
+                author={el.author}
+                album={el.album}
+                duration={el.duration_in_seconds}
+                url={el.track_file}
+              />
+            ))}
       </S.ContentPlaylist>
     </PageFrame>
   );

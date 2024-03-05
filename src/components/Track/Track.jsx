@@ -66,7 +66,6 @@ export default function Track(props) {
     e.stopPropagation();
     if (addToFavorites) {
       await addToFavorites(props.id);
-      // Обновляем данные избранных треков после добавления лайка
       refetchFavoriteTracks();
     }
   };

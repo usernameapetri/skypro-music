@@ -4,6 +4,9 @@ const initialState = {
   favoriteTracks: [],
   tracksData: [],
   selectedTrack: {},
+  classicalMusic: [],
+  rockMusic: [],
+  electronicMusic: [],
   plaing: false,
   shuffled: false,
   isLoading: true,
@@ -67,7 +70,19 @@ export const counterSlice = createSlice({
       state.plaing = false;
     },
     setTracksData: (state, action) => {
+      const sortedTracks = [...action.payload].sort((a, b) =>
+        a.genre.localeCompare(b.genre),
+      );
       state.tracksData = action.payload;
+      state.classicalMusic = sortedTracks.filter(
+        (track) => track.genre === 'Классическая музыка',
+      );
+      state.rockMusic = sortedTracks.filter(
+        (track) => track.genre === 'Рок музыка',
+      );
+      state.electronicMusic = sortedTracks.filter(
+        (track) => track.genre === 'Электронная музыка',
+      );
     },
     setCurrentTrack: (state, action) => {
       state.selectedTrack = action.payload;
@@ -98,5 +113,8 @@ export const selectTrackData = (state) => state.musicData.tracksData;
 export const selectCurrentTrack = (state) => state.musicData.selectedTrack;
 export const selectIsLoading = (state) => state.musicData.isLoading;
 export const selectFetchError = (state) => state.musicData.fetchError;
+export const selectClassicalMusic = (state) => state.musicData.classicalMusic;
+export const selectRockMusic = (state) => state.musicData.rockMusic;
+export const selectElectronicMusic = (state) => state.musicData.electronicMusic;
 
 export default counterSlice.reducer;
