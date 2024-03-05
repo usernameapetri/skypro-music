@@ -24,7 +24,7 @@ function MainPage() {
       dispatch(setTracksData(data));
     }
   }, [data, dispatch]);
-
+  console.log(data);
   return (
     <S.Wrapper>
       <S.Container>
